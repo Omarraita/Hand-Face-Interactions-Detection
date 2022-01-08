@@ -54,6 +54,8 @@ Link to the trainined LSTM Models https://drive.switch.ch/index.php/apps/files/?
 - LSTM_train_test.ipynb: loads, trains and tests the LSTM implementation. One has to specify the dataset type at the begining of the notebook ('applewatch', 'ax3', 'mms+') and the rest is done automatically.
 
 # Main results
+An LSTM implementation yields a 72.3% classification accuracy with 71.6% F1-score.
+
 - Training and validation losses: 
 
 ![Training and validation losses](https://github.com/Omarraita/Hand-Face-Interactions-Detection/blob/main/Images/applewatch_losses.png)
