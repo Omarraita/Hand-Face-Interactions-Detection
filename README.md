@@ -1,13 +1,11 @@
 # Hand-Face-Interactions-Detection
 
-The goal of this project is to use Machine learning and Deep learning techniques to classify and detect Human Hand-Face interactions in order to warn users in case of risky hand-face interactions and especiallythe contact with mucosal membranes(e.g., Face skratching, eye-rubbing) to ultimately limit transmission of infectious diseases.  A potential application in ophthalmology: blindness is caused by diseasessuch as Keratoconus that could be prevented by eye-rubbing cessation. 
+The goal of this project is to use Machine learning and Deep learning techniques to classify and detect Human Hand-Face interactions in order to warn users in case of risky hand-face interactions and especiallythe contact with mucosal membranes(e.g., Face skratching, eye-rubbing) to ultimately limit transmission of infectious diseases.  A potential application in ophthalmology: blindness is caused by diseases such as Keratoconus that could be prevented by eye-rubbing cessation. 
 
 # Report
-The report of this project can be found [here](https://github.com/Omarraita/MI_prediction/blob/main/MI_prediction.pdf).
+The report of this project can be found [here](https://www.overleaf.com/project/61cb2a3c3b5c5c9c578a1815).
 
 # Requirements
-
-In order to run the notebooks, it is necessary to install the following packages:
 
 pip3 install openpifpaf==0.12.14 (For computer vision software, v0.12.14 is necessary)
 
@@ -17,66 +15,43 @@ pip3 install pytorch-lightning  (Practical Pytorch Library that provides built-i
 
 pip3 install torch==1.10.0 (Pytorch Version used for training: compatible with pytorch-lightning)
 
+# Computer vision software
+Uses openpifpaf to detect the user's body. Displays an interaction window with instructions that ask the user to perform specific actions (e.g. eye rubbing, eating , teeth brushing). 
+
+The actions start and end times (unix epochs) are detected and logged into records.csv.  
+
+
 # Data preparation
 
-- Clone this repository into your base_folder. To run the data augmentation, download and extract Raw_Data containing raw and labelled angiography images from https://drive.switch.ch/index.php/s/367fkbeytfy24d8/authenticate (requires a password). 
-- 
-We expect the directory structure to be the following:
+- To reproduce the results, clone this repository into your base_folder. Download labeled datasets (ax3, mms+, applewatch) from https://drive.switch.ch/index.php/apps/files/?dir=/Hand-Face%20Interactions&fileid=4315578364 (requires a password) and add them into the Data folder. We expect the directory structure to be the following:
 
 base_folder/Data/  
     codes/  
     Results/ 
-  
- - The augmented data that was used to generate the results can be found in https://drive.switch.ch/index.php/s/Rh9UrhnUmVLjsFn (requires a password). 
 
 # Models 
 
-Link to selected Models https://drive.switch.ch/index.php/s/VsSCiQ5uY3Leikr
+Link to the trainined LSTM Models https://drive.switch.ch/index.php/apps/files/?dir=/Hand-Face%20Interactions&fileid=4315578364
 
-Link to the model that was trained with a different task (stenosis prediction), on artificial data https://drive.switch.ch/index.php/s/GLZaagFUdPobYSv
+# Computer Vision codes
+- Calibration.py: Asks the user to perform a square signal with his wrists (3 periods of 10 seconds). This will be used to synchronize the times between the computer vision records and the wristband data.
+- Classes.py: Implementation of different modules for action detection. 
+- main.ipy : This is the main file from which you can run the experiment by specifying:
+    - The user_id, handedness, position (sitting or standing).
+    - The thresholds for the action detection (e.g. maximal distance between eye and hand, velocity thresholds...)
+    - The data collection time in (min). Please note that the software overloads the cache memory (wth openpifpaf annotation objects) and results in a significant lag after 6min. Therefore, the experiments were run with 5 periods of 4min.
 
-# Notebooks
-
-- Training.ipynb : This is the main file from which you can run the main experiment:
-
-  - Data augmentation
-  
-  - Train different models: {0:'model_scratch', 1:'model_pretrained', 2:'model_frangi', 3:'model_frangi_reversed', 4:'model_simsiam', 5:'model_simsiam_frangi', 6:'model_art_data'}
-
-  - Load and test the trained models.
-
-  - Compare the predictions between the different models.
-
-  - Display the Gradcam visualizations.
-
-  - Display features with TSNE.
-
-- Verifications.ipynb : 
-
-  - Displays the patches extracted from the original images to perform sanity checks. 
-
-  - Verifies and data coming from the weighted dataloader
-
-  - Contains the display_patient_views(): Visualization function that displays the different patches coming from the a given patient with the corresponding label and prediction.
-
-- Frangi-Net.ipynb: Contains a Frangi-Net implementation attempt. Might be useful for a future work.
-
-# Python files
-- label_detection_patch_creation_.py: Runnable file that detects the labels and crops the patches from the Raw Data.
-- cross_validation_lr_wd_frangi.py: Runnable file to run a cross validation on both parameters learning rate and weight decay.
-- implementations.py: contains all the implemented functions for this project. The main parts are: Data preparation, Dataset Classes, Models Initializer, Train and test functions, Cross validation functions.
-- utils.py:  contains util functions such as visualization functions.
-
-# SimSiam
-- Contains the adapted PyTorch implementation of SimSiam (https://github.com/leftthomas/SimSiam) to the cardio dataset. Uses some functions taken from SimCLR implementation (https://github.com/sthalles/SimCLR). 
-
-# Results Folders
-- Results: Validation results for all models.
-- CV_Results: Cross validation results for the regular resnet18 model.
-- CV_Results_frangi: Cross validation results for the frangi model.
-- Gradcam_images: Heatmap visualizations for different models.
-- test_results: Test results for all models.
-
+# Data preparation and classification
+- lstm_module.py: contains the Dataset and Dataloader classes, a PadSequence implementation that allows to take sequences with different input lengths as well as the LSTM module implementation. Requires Pytorch-Lightning library.
+- project_utils.py: contains util functions to make the train-test notebook compatible with different datasets.
+- data_preparation.ipynb: loads, cleans, merges and saves files (computer vision records, ax3, mms+, applewatch), with the following parts:
+    - Read seperate data files for each user.
+    - Features visualization and basic statistics.
+    - Visualization of the calibration signals.
+    - Data labeling and saving.
+ 
+- Sanity_checks.ipynb:  displays visualization to validate the computer vision software.
+- LSTM_train_test.ipynb: loads, trains and tests the LSTM implementation. One has to specify the dataset type at the begining of the notebook ('applewatch', 'ax3', 'mms+') and the rest is done automatically.
 
 # Main results
 - Training and validation losses: 
