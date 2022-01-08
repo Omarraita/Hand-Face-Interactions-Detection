@@ -9,32 +9,25 @@ The report of this project can be found [here](https://github.com/Omarraita/MI_p
 
 In order to run the notebooks, it is necessary to install the following packages:
 
-pip install  (for the image transformations)
+pip3 install openpifpaf==0.12.14 (For computer vision software, v0.12.14 is necessary)
 
-pip install  (for SimSiam training)
+pip3 install torch==1.10.0 (Pytorch Version used for training: compatible with pytorch-lightning)
 
-pip install   (for the gradcam visualization)
+pip3 install pytorch-lightning  (Practical Pytorch Library that provides built-in modules for training and performance logging)
+
+pip3 install torch==1.10.0 (Pytorch Version used for training: compatible with pytorch-lightning)
 
 # Data preparation
 
 - Clone this repository into your base_folder. To run the data augmentation, download and extract Raw_Data containing raw and labelled angiography images from https://drive.switch.ch/index.php/s/367fkbeytfy24d8/authenticate (requires a password). 
+- 
 We expect the directory structure to be the following:
 
-base_folder/Raw_Data/  
-    Raw/  
-    Labelled/ 
+base_folder/Data/  
+    codes/  
+    Results/ 
   
- - The augmented data that was used to generate the results can be found in https://drive.switch.ch/index.php/s/Rh9UrhnUmVLjsFn (requires a password). If loaded manually, the expected     directory for the augmented data is:
-
- base_folder/Datasets/
- 
-    dataset_patches.npz
- 
-    training_patches_augRed.npz
- 
-    validation_patches_augRed.npz
- 
-    test_patches.npz
+ - The augmented data that was used to generate the results can be found in https://drive.switch.ch/index.php/s/Rh9UrhnUmVLjsFn (requires a password). 
 
 # Models 
 
@@ -83,7 +76,6 @@ Link to the model that was trained with a different task (stenosis prediction), 
 - CV_Results_frangi: Cross validation results for the frangi model.
 - Gradcam_images: Heatmap visualizations for different models.
 - test_results: Test results for all models.
--
 
 
 # Main results
