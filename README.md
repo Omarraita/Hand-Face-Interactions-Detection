@@ -23,7 +23,7 @@ The actions start and end times (unix epochs) are detected and logged into recor
 
 # Data preparation
 
-- To reproduce the results, clone this repository into your base_folder. Download labeled datasets (ax3, mms+, applewatch) from https://drive.switch.ch/index.php/apps/files/?dir=/Hand-Face%20Interactions&fileid=4315578364 (requires a password) and add them into the Data folder. We expect the directory structure to be the following:
+- To reproduce the results, clone this repository into your base_folder. Download labeled datasets (ax3, mms+, applewatch) from https://drive.switch.ch/index.php/s/4LRzi07Y0s6i9xI (requires a password) and add them into the Data folder. We expect the directory structure to be the following:
 
 base_folder/Data/  
     codes/  
@@ -31,8 +31,7 @@ base_folder/Data/
 
 # Models 
 
-Link to the trainined LSTM Models https://drive.switch.ch/index.php/apps/files/?dir=/Hand-Face%20Interactions&fileid=4315578364
-
+Link to the trainined LSTM Models https://drive.switch.ch/index.php/s/4LRzi07Y0s6i9xI
 # Computer Vision codes
 - Calibration.py: Asks the user to perform a square signal with his wrists (3 periods of 10 seconds). This will be used to synchronize the times between the computer vision records and the wristband data.
 - Classes.py: Implementation of different modules for action detection. 
